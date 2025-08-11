@@ -41,7 +41,7 @@
         in
         {
           overlayAttrs = {
-            inherit (config.packages) gleamPackage;
+            gleam = gleamPackage;
           };
 
           treefmt = {
