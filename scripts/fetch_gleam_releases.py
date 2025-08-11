@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 import json
-import requests
+import requeste
 import subprocess
-from pathlib import Path
 from typing import Dict, List
 
 def get_sha256_hash(url: str) -> str:
@@ -83,31 +82,11 @@ def main():
         releases = fetch_gleam_releases()
         assets_data = extract_assets_with_hashes(releases)
         
-        # Find the latest version (first in the sorted releases list)
-        if releases:
-            latest_version = releases[0]["tag_name"].lstrip("v")
-            if latest_version in assets_data:
-                assets_data["latest"] = assets_data[latest_version]
-        
         output_file = "gleam_hashes.json"
         with open(output_file, "w") as f:
             json.dump(assets_data, f, indent=2)
         
         print(f"Generated {output_file} with {len(assets_data)} entries")
-        
-        # Also generate README.md
-        try:
-            generate_readme_script = Path(__file__).parent / "generate_readme.py"
-            if generate_readme_script.exists():
-                result = subprocess.run(["python", str(generate_readme_script)], capture_output=True, text=True)
-                if result.returncode == 0:
-                    print("Successfully updated README.md")
-                else:
-                    print(f"Failed to update README.md: {result.stderr}")
-            else:
-                print("README generation script not found, skipping README update")
-        except Exception as readme_error:
-            print(f"Error updating README: {readme_error}")
         
     except Exception as e:
         print(f"Error: {e}")

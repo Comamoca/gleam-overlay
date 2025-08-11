@@ -150,4 +150,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## 🙏 Acknowledgments
 
 - [Gleam](https://gleam.run/) - A friendly language for building type-safe, scalable systems
-- The Nix community for excellent tooling and patterns
+- [deno-overlay](https://github.com/haruki7049/deno-overlay) - I used it as a reference for approaches such as obtaining hashes.
