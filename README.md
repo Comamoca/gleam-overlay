@@ -25,39 +25,62 @@ A Nix overlay providing [Gleam](https://gleam.run/) packages for multiple versio
 
 ### With Nix Flakes
 
-Add this overlay to your flake inputs:
+The following is an example of gleam-overlay when using [flake-parts](https://flake.parts).
 
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    gleam-overlay = {
-      url = "github:Comamoca/gleam-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    systems.url = "github:nix-systems/default";
+    devenv.url = "github:cachix/devenv";
+    gleam-overlay.url = "github:Comamoca/gleam-overlay";
   };
 
-  outputs = { self, nixpkgs, gleam-overlay }: {
-    devShells.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
-      buildInputs = [
-        gleam-overlay.packages.x86_64-linux.default  # Latest version
+  outputs =
+    inputs@{
+      self,
+      systems,
+      nixpkgs,
+      flake-parts,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.devenv.flakeModule
       ];
+      systems = import inputs.systems;
+
+      perSystem =
+        {
+          config,
+          pkgs,
+          system,
+          ...
+        }:
+        {
+           _module.args.pkgs = import inputs.nixpkgs {
+             inherit system;
+             overlays = [
+               inputs.gleam-overlay.overlays.default
+             ];
+             config = { };
+           };
+
+          devenv.shells.default = {
+            packages = [ pkgs.nil ];
+
+            languages = {
+              gleam = {
+                enable = true;
+                package = pkgs.gleam.bin."1.10.0";
+              };
+            };
+
+            enterShell = '''';
+          };
+        };
     };
-  };
-}
-```
-
-### With Traditional Overlays
-
-```nix
-let
-  gleam-overlay = import (fetchTarball "https://github.com/Comamoca/gleam-overlay/archive/main.tar.gz");
-  pkgs = import <nixpkgs> { overlays = [ gleam-overlay ]; };
-in
-{
-  environment.systemPackages = [
-    pkgs.gleamPackage.bin.latest
-  ];
 }
 ```
 
