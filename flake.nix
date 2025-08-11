@@ -1,92 +1,59 @@
 {
-  description = "An example flake for build latest gleam.";
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    systems.url = "github:nix-systems/default";
-    devenv.url = "github:cachix/devenv";
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    git-hooks-nix.url = "github:cachix/git-hooks.nix";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    gleam-overlay.url = "github:Comamoca/gleam-overlay";
   };
 
   outputs =
-    inputs@{
-      self,
-      systems,
-      nixpkgs,
-      flake-parts,
-      ...
-    }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.devenv.flakeModule
-        inputs.treefmt-nix.flakeModule
-        inputs.git-hooks-nix.flakeModule
-        inputs.flake-parts.flakeModules.easyOverlay
+    inputs@{ self, nixpkgs, ... }:
+    let
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
       ];
-      systems = import inputs.systems;
 
-      perSystem =
-        {
-          config,
-          pkgs,
-          system,
-          ...
-        }:
+      forAllSystems =
+        f:
+        builtins.listToAttrs (
+          map (system: {
+            name = system;
+            value = f system;
+          }) systems
+        );
+    in
+    {
+      devShells = forAllSystems (system:
         let
-          gleamPackage = import ./gleam.nix { inherit pkgs; };
-          gleam = gleamPackage.bin.latest;
+          pkgs = import nixpkgs { inherit system; };
         in
         {
-          overlayAttrs = {
-            gleam = gleamPackage;
-          };
-
-          treefmt = {
-            projectRootFile = "flake.nix";
-            programs = {
-              nixfmt.enable = true;
-            };
-
-            settings.formatter = { };
-          };
-
-          pre-commit = {
-            check.enable = true;
-            settings = {
-              hooks = {
-                treefmt.enable = true;
-                ripsecrets.enable = true;
-              };
-            };
-          };
-
-          devenv.shells.default = {
+          default = pkgs.mkShell {
             packages = with pkgs; [
               nil
               python312Packages.python-lsp-server
             ];
-
-            languages = {
-              gleam = {
-                enable = true;
-                package = gleam;
-              };
-              python = {
-                enable = true;
-                uv = {
-                  enable = true;
-                  sync.enable = true;
-                };
-              };
-            };
-
-            enterShell = '''';
+            shellHook = '''';
           };
+        }
+      );
 
-          packages.default = gleam;
+      packages = forAllSystems (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+          gleamPackage = import ./gleam.nix { inherit pkgs; };
+          gleam = gleamPackage.bin.latest;
+        in
+        {
+          default = gleam;
+        }
+      );
+
+      overlays = {
+        default = self: super: {
+          gleam = import ./gleam.nix { pkgs = super; };
         };
+      };
     };
 }

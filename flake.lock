@@ -3,12 +3,15 @@
     "cachix": {
       "inputs": {
         "devenv": [
+          "gleam-overlay",
           "devenv"
         ],
         "flake-compat": [
+          "gleam-overlay",
           "devenv"
         ],
         "git-hooks": [
+          "gleam-overlay",
           "devenv"
         ],
         "nixpkgs": "nixpkgs"
@@ -85,6 +88,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
+          "gleam-overlay",
           "devenv",
           "nix",
           "nixpkgs"
@@ -125,10 +129,12 @@
     "git-hooks": {
       "inputs": {
         "flake-compat": [
+          "gleam-overlay",
           "devenv"
         ],
         "gitignore": "gitignore",
         "nixpkgs": [
+          "gleam-overlay",
           "devenv",
           "nixpkgs"
         ]
@@ -170,6 +176,7 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
+          "gleam-overlay",
           "devenv",
           "git-hooks",
           "nixpkgs"
@@ -192,6 +199,7 @@
     "gitignore_2": {
       "inputs": {
         "nixpkgs": [
+          "gleam-overlay",
           "git-hooks-nix",
           "nixpkgs"
         ]
@@ -207,6 +215,30 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gleam-overlay": {
+      "inputs": {
+        "devenv": "devenv",
+        "flake-parts": "flake-parts_2",
+        "git-hooks-nix": "git-hooks-nix",
+        "nixpkgs": "nixpkgs_5",
+        "rust-overlay": "rust-overlay",
+        "systems": "systems",
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1754919262,
+        "narHash": "sha256-0rCLTHpwpTAUnKECrq3WJTLokctLqXge8Uq06g+xoV4=",
+        "owner": "Comamoca",
+        "repo": "gleam-overlay",
+        "rev": "9473698844c5b9a67db93f258330bd6f7c8680e7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Comamoca",
+        "repo": "gleam-overlay",
         "type": "github"
       }
     },
@@ -229,18 +261,22 @@
     "nix": {
       "inputs": {
         "flake-compat": [
+          "gleam-overlay",
           "devenv"
         ],
         "flake-parts": "flake-parts",
         "libgit2": "libgit2",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-23-11": [
+          "gleam-overlay",
           "devenv"
         ],
         "nixpkgs-regression": [
+          "gleam-overlay",
           "devenv"
         ],
         "pre-commit-hooks": [
+          "gleam-overlay",
           "devenv"
         ]
       },
@@ -383,15 +419,26 @@
         "type": "github"
       }
     },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1754725699,
+        "narHash": "sha256-iAcj9T/Y+3DBy2J0N+yF9XQQQ8IEb5swLFzs23CdP88=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "85dbfc7aaf52ecb755f87e577ddbe6dbbdbc1054",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "devenv": "devenv",
-        "flake-parts": "flake-parts_2",
-        "git-hooks-nix": "git-hooks-nix",
-        "nixpkgs": "nixpkgs_5",
-        "rust-overlay": "rust-overlay",
-        "systems": "systems",
-        "treefmt-nix": "treefmt-nix"
+        "gleam-overlay": "gleam-overlay",
+        "nixpkgs": "nixpkgs_8"
       }
     },
     "rust-overlay": {
