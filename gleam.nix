@@ -64,7 +64,7 @@ let
   ) (builtins.removeAttrs hashes [ "latest" ]);
 
 in
-{
+rec {
   bin = gleamVersions // {
     latest =
       let
@@ -75,5 +75,5 @@ in
         mkGleamBinary "latest" latestPlatforms.${currentArch}
       else
         throw "Architecture ${currentArch} not supported for latest Gleam version";
-  };
+  } // gleamVersions;
 }
