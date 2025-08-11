@@ -21,6 +21,15 @@ A Nix overlay providing [Gleam](https://gleam.run/) packages for multiple versio
 - 📦 Easy integration with Nix flakes and traditional overlays
 - 🔄 Binary distributions for faster installation
 
+
+## ❓ Difference from gleam-nix
+
+[gleam-nix](https://github.com/vic/gleam-nix) uses [crate2nix](https://github.com/nix-community/crate2nix) to actually compile Gleam.
+In contrast, gleam-overlay simply fetches precompiled binaries from GitHub Releases and does not perform any compilation.
+
+If you are developing the Gleam compiler itself, you will need to compile Gleam, so **gleam-nix** is the better choice.
+If you are developing packages that use Gleam, you do not need to compile Gleam, so **gleam-overlay** is more suitable.
+
 ## 🚀 Usage
 
 ### With Nix Flakes
@@ -30,56 +39,47 @@ The following is an example of gleam-overlay when using [flake-parts](https://fl
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    systems.url = "github:nix-systems/default";
-    devenv.url = "github:cachix/devenv";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     gleam-overlay.url = "github:Comamoca/gleam-overlay";
   };
 
   outputs =
-    inputs@{
-      self,
-      systems,
-      nixpkgs,
-      flake-parts,
-      ...
-    }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.devenv.flakeModule
+    inputs@{ self, nixpkgs, ... }:
+    let
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
       ];
-      systems = import inputs.systems;
 
-      perSystem =
-        {
-          config,
-          pkgs,
-          system,
-          ...
-        }:
-        {
-           _module.args.pkgs = import inputs.nixpkgs {
-             inherit system;
-             overlays = [
-               inputs.gleam-overlay.overlays.default
-             ];
-             config = { };
-           };
-
-          devenv.shells.default = {
-            packages = [ pkgs.nil ];
-
-            languages = {
-              gleam = {
-                enable = true;
-                package = pkgs.gleam.bin."1.10.0";
-              };
-            };
-
-            enterShell = '''';
+      forAllSystems =
+        f:
+        builtins.listToAttrs (
+          map (system: {
+            name = system;
+            value = f system;
+          }) systems
+        );
+    in
+    {
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ inputs.gleam-overlay.overlays.default ];
           };
-        };
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              pkgs.gleam.bin."1.10.0"
+            ];
+            shellHook = '''';
+          };
+        }
+      );
     };
 }
 ```
