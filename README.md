@@ -21,66 +21,43 @@ A Nix overlay providing [Gleam](https://gleam.run/) packages for multiple versio
 - 📦 Easy integration with Nix flakes and traditional overlays
 - 🔄 Binary distributions for faster installation
 
-
-## ❓ Difference from gleam-nix
-
-[gleam-nix](https://github.com/vic/gleam-nix) uses [crate2nix](https://github.com/nix-community/crate2nix) to actually compile Gleam.
-In contrast, gleam-overlay simply fetches precompiled binaries from GitHub Releases and does not perform any compilation.
-
-If you are developing the Gleam compiler itself, you will need to compile Gleam, so **gleam-nix** is the better choice.
-If you are developing packages that use Gleam, you do not need to compile Gleam, so **gleam-overlay** is more suitable.
-
 ## 🚀 Usage
 
 ### With Nix Flakes
 
-The following is an example of gleam-overlay when using [flake-parts](https://flake.parts).
+Add this overlay to your flake inputs:
 
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    gleam-overlay.url = "github:Comamoca/gleam-overlay";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    gleam-overlay = {
+      url = "github:Comamoca/gleam-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    inputs@{ self, nixpkgs, ... }:
-    let
-      systems = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
+  outputs = { self, nixpkgs, gleam-overlay }: {
+    devShells.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+      buildInputs = [
+        gleam-overlay.packages.x86_64-linux.default  # Latest version
       ];
-
-      forAllSystems =
-        f:
-        builtins.listToAttrs (
-          map (system: {
-            name = system;
-            value = f system;
-          }) systems
-        );
-    in
-    {
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ inputs.gleam-overlay.overlays.default ];
-          };
-        in
-        {
-          default = pkgs.mkShell {
-            packages = [
-              pkgs.gleam.bin."1.10.0"
-            ];
-            shellHook = '''';
-          };
-        }
-      );
     };
+  };
+}
+```
+
+### With Traditional Overlays
+
+```nix
+let
+  gleam-overlay = import (fetchTarball "https://github.com/Comamoca/gleam-overlay/archive/main.tar.gz");
+  pkgs = import <nixpkgs> { overlays = [ gleam-overlay ]; };
+in
+{
+  environment.systemPackages = [
+    pkgs.gleamPackage.bin.latest
+  ];
 }
 ```
 
@@ -173,4 +150,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## 🙏 Acknowledgments
 
 - [Gleam](https://gleam.run/) - A friendly language for building type-safe, scalable systems
-- [deno-overlay](https://github.com/haruki7049/deno-overlay) - I used it as a reference for approaches such as obtaining hashes.
+- The Nix community for excellent tooling and patterns

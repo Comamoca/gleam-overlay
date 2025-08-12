@@ -42,11 +42,12 @@
       packages = forAllSystems (system:
         let
           pkgs = import nixpkgs { inherit system; };
-          gleamPackage = import ./gleam.nix { inherit pkgs; };
+          gleamPackage = import ./gleam.nix { inherit pkgs; }; 
           gleam = gleamPackage.bin.latest;
         in
         {
           default = gleam;
+          nightly = gleamPackage.bin.nightly;
         }
       );
 

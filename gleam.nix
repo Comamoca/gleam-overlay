@@ -61,7 +61,7 @@ let
       mkGleamBinary version platforms.${currentArch}
     else
       throw "Architecture ${currentArch} not supported for Gleam version ${version}"
-  ) (builtins.removeAttrs hashes [ "latest" ]);
+  ) (builtins.removeAttrs hashes [ "latest" "nightly" ]);
 
 in
 rec {
@@ -69,11 +69,26 @@ rec {
     latest =
       let
         currentArch = getCurrentArch;
-        latestPlatforms = hashes.latest or (throw "No latest version found in hashes");
+        # Find the latest stable version (exclude nightly, RC, and pre-release versions)
+        allVersions = builtins.filter (v: v != "nightly") (builtins.attrNames hashes);
+        stableVersions = builtins.filter (v: !(builtins.match ".*-.*" v != null)) allVersions;
+        sortedVersions = builtins.sort (a: b: builtins.compareVersions a b < 0) stableVersions;
+        latestVersion = builtins.elemAt sortedVersions ((builtins.length sortedVersions) - 1);
+        latestPlatforms = hashes.${latestVersion};
       in
       if builtins.hasAttr currentArch latestPlatforms then
-        mkGleamBinary "latest" latestPlatforms.${currentArch}
+        mkGleamBinary latestVersion latestPlatforms.${currentArch}
       else
-        throw "Architecture ${currentArch} not supported for latest Gleam version";
+        throw "Architecture ${currentArch} not supported for latest Gleam version ${latestVersion}";
+    
+    nightly =
+      let
+        currentArch = getCurrentArch;
+        nightlyPlatforms = hashes.nightly or (throw "No nightly version found in hashes");
+      in
+      if builtins.hasAttr currentArch nightlyPlatforms then
+        mkGleamBinary "nightly" nightlyPlatforms.${currentArch}
+      else
+        throw "Architecture ${currentArch} not supported for Gleam nightly version";
   } // gleamVersions;
 }
