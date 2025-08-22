@@ -1,11 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    gleam-overlay.url = "github:Comamoca/gleam-overlay";
   };
 
   outputs =
-    inputs@{ self, nixpkgs, ... }:
+    { self, nixpkgs }:
     let
       systems = [
         "aarch64-darwin"
