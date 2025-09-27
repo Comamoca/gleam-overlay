@@ -103,6 +103,15 @@ nix run github:Comamoca/gleam-overlay#nightly
 nix shell github:Comamoca/gleam-overlay
 ```
 
+### Build cache
+
+gleam-overlay provides a [cache](https://app.cachix.org/cache/gleam-overlay#pull) via cachix.
+In environments with cachix cli, you can use the cache during builds with the following command:
+
+```sh
+cachix use gleam-overlay
+```
+
 ## 🏗️ Supported Platforms
 
 - `aarch64-darwin`
