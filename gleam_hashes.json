@@ -560,19 +560,19 @@
   "nightly": {
     "aarch64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-aarch64-apple-darwin.tar.gz",
-      "sha256": "sha256-1Q+fkr/3cJRhMFam0C26xM9Hp6a7q0KyFkBs9WTS9mE="
+      "sha256": "sha256-ApOBdVu2qB3nyjpEEAQUlycTgqGaVWBXLVSnFySd9mM="
     },
     "aarch64-linux": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-UB474YoLu5x+/LlHT45Xwg9nwWTJ7h3xVIJzIUaDk8M="
+      "sha256": "sha256-szCO3gbc8yB7VMltjR12Pzlf7GTLRe9+uqR6vJxnupE="
     },
     "x86_64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-x86_64-apple-darwin.tar.gz",
-      "sha256": "sha256-uFY4w6DOZ6hvjKGkwyku9BTWtrnHOVRKpkM85jNQSJA="
+      "sha256": "sha256-ehr773Edm9AodRROThLKrnFJ9a7nFMS+N7tdNexihR4="
     },
     "x86_64-linux": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-QosAeRH53T/p75TLi1KhHryxxi1zUygjd8QaAQBgGDc="
+      "sha256": "sha256-I6nDBq2Uevgm0NNSIV5NKsmzCuKix0dNRWKSYiNrYIg="
     }
   }
 }
