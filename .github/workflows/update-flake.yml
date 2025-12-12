@@ -33,4 +33,4 @@ jobs:
           pr-labels: |
             dependencies
             automated
-          github-token: ${{ steps.app-token.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
