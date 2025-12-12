@@ -14,11 +14,23 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
       - uses: DeterminateSystems/determinate-nix-action@v3
+
       - uses: DeterminateSystems/update-flake-lock@main
         with:
           pr-title: "Update Nix flake inputs"
           pr-labels: |
             dependencies
             automated
+          github-token: ${{ steps.app-token.outputs.token }}
