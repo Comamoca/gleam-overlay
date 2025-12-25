@@ -21,6 +21,9 @@ def extract_versions(gleam_data: Dict) -> List[str]:
     
     # Sort versions in descending order (newer versions first)
     def version_sort_key(version: str):
+        # Handle special versions like 'nightly'
+        if version == "nightly":
+            return (0, 0, 0, -1, 0)  # Put nightly at the end
         # Handle release candidates and versions with additional suffixes
         if "-rc" in version:
             base_version, rc_part = version.split("-rc", 1)

@@ -30,20 +30,50 @@ Add this overlay to your flake inputs:
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    gleam-overlay = {
-      url = "github:Comamoca/gleam-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    gleam-overlay.url = "github:Comamoca/gleam-overlay";
   };
 
-  outputs = { self, nixpkgs, gleam-overlay }: {
-    devShells.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
-      buildInputs = [
-        gleam-overlay.packages.x86_64-linux.default  # Latest version
+  outputs =
+    inputs@{ self, nixpkgs, ... }:
+    let
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
       ];
+
+      forAllSystems =
+        f:
+        builtins.listToAttrs (
+          map (system: {
+            name = system;
+            value = f system;
+          }) systems
+        );
+    in
+    {
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              inputs.gleam-overlay.overlays.default
+            ];
+          };
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              pkgs.gleam.bin.latest # Latest version
+            ];
+            shellHook = '''';
+          };
+        }
+      );
     };
-  };
 }
 ```
 
@@ -57,6 +87,7 @@ in
 {
   environment.systemPackages = [
     pkgs.gleamPackage.bin.latest
+    # pkgs.gleamPackage.bin.nightly
   ];
 }
 ```
@@ -66,9 +97,19 @@ in
 ```sh
 # Run the latest version
 nix run github:Comamoca/gleam-overlay
+nix run github:Comamoca/gleam-overlay#nightly
 
 # Use in a shell
 nix shell github:Comamoca/gleam-overlay
+```
+
+### Build cache
+
+gleam-overlay provides a [cache](https://app.cachix.org/cache/gleam-overlay#pull) via cachix.
+In environments with cachix cli, you can use the cache during builds with the following command:
+
+```sh
+cachix use gleam-overlay
 ```
 
 ## 🏗️ Supported Platforms
