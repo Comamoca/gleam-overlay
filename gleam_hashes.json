@@ -119,10 +119,6 @@
     "x86_64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/v1.16.0-rc1/gleam-v1.16.0-rc1-x86_64-apple-darwin.tar.gz",
       "sha256": "sha256-32HWKqwSFQ+akwgZsGKfwcU48FG06SLFHRs23jpmj7w="
-    },
-    "x86_64-linux": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.16.0-rc1/gleam-v1.16.0-rc1-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-cvgsM6bL0G1/US8wIwwKC+G9LmJObphv0KRwIQ9strk="
     }
   },
   "1.15.2": {
@@ -353,6 +349,10 @@
     "x86_64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/v1.12.0/gleam-v1.12.0-x86_64-apple-darwin.tar.gz",
       "sha256": "sha256-/KKoz1Qkz6CWcQwZG7+MArY17Q5sDi7Ti5XrpejfAwI="
+    },
+    "x86_64-linux": {
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.12.0/gleam-v1.12.0-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "sha256-A5qHvXKU08/SQl9W6P/vUIsXDs7ELnYIBoM/seAxnUk="
     }
   },
   "1.12.0-rc3": {
@@ -556,19 +556,19 @@
   "nightly": {
     "aarch64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-aarch64-apple-darwin.tar.gz",
-      "sha256": "sha256-PL0R6oAEsvzT57ks5Wh8TCy9GLRIzvkluf7CLdtlC+Q="
+      "sha256": "sha256-MPznkewFP4FnlN3vvuYurvoKrs7VcNRUXnR36n434Ro="
     },
     "aarch64-linux": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-41O0EFwmNnsZNNY4GTw0IRGX1YtBmhUBU1ZHsroOG+0="
+      "sha256": "sha256-5svq4X1BbmJ1s6qMUaKgx4tEk/z0obH8ZoXiEDY7tNs="
     },
     "x86_64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-x86_64-apple-darwin.tar.gz",
-      "sha256": "sha256-gNp9IohJ65VH5C1YJgu6jLfvOcb1k7Pu8xJJ5kDey2M="
+      "sha256": "sha256-ogRqhgXRDSESiHQxFnxUmksdA6LnGXg6JtyOWnrvg+o="
     },
     "x86_64-linux": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-o7UBfJoC81Ae4C/q7S441lN2U8dLJCFFqsQnwiYn7bA="
+      "sha256": "sha256-qHSSkWbMiT266Mb09bvCeUB5tugn2HCLVO3OzsfUODs="
     }
   }
 }
