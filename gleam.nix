@@ -33,6 +33,7 @@ let
         description = "A friendly language for building type-safe, scalable systems";
         homepage = "https://gleam.run";
         license = licenses.asl20;
+        mainProgram = "gleam";
         platforms = [
           "x86_64-linux"
           "aarch64-linux"
