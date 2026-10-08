@@ -1,4 +1,22 @@
 {
+  "1.19.1": {
+    "aarch64-darwin": {
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-aarch64-apple-darwin.tar.gz",
+      "sha256": "sha256-MYJyFPndTdYLfvt7571C3Xb/cOZGk2dz0qTqmKL+89E="
+    },
+    "aarch64-linux": {
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-aarch64-unknown-linux-musl.tar.gz",
+      "sha256": "sha256-sO7tjGJUccKrD6twWLU5ecR/o72EMVtJtpSB4m1YP30="
+    },
+    "x86_64-darwin": {
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-x86_64-apple-darwin.tar.gz",
+      "sha256": "sha256-IzUBDh5ISaDyPf7QgzTDK59+nMq4cxDJSSXeGyUL3+c="
+    },
+    "x86_64-linux": {
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "sha256-Ihv/B1g3Kq52z+RAt0Rfn1x+pnlHKXsREhFceY/Rg4U="
+    }
+  },
   "1.19.0": {
     "aarch64-darwin": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.0/gleam-v1.19.0-aarch64-apple-darwin.tar.gz",
@@ -521,40 +539,22 @@
       "sha256": "sha256-chfvVl89uu8vH9KorPFzZIRDGhRoh9xuRmH6F8i/3fA="
     }
   },
-  "1.13.0-rc1": {
-    "aarch64-darwin": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.13.0-rc1/gleam-v1.13.0-rc1-aarch64-apple-darwin.tar.gz",
-      "sha256": "sha256-qPCV2fOEE7KtZqgrMkZerqbPOcNJJ+paB7OqyvCunUk="
-    },
-    "aarch64-linux": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.13.0-rc1/gleam-v1.13.0-rc1-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-hyW2RX/g8vv+BEBGopQbIA2OBaEb6pYdqf0XBH/D1Q0="
-    },
-    "x86_64-darwin": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.13.0-rc1/gleam-v1.13.0-rc1-x86_64-apple-darwin.tar.gz",
-      "sha256": "sha256-IjfoAbDXoB3z/9Z8HeBtBARdxJbsuNbTPHJ1BDmPKXI="
-    },
-    "x86_64-linux": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.13.0-rc1/gleam-v1.13.0-rc1-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-P9xL7K9eP29T7R6JUn5BUkGk6rfYExaurJpztV2mKSI="
-    }
-  },
   "latest": {
     "aarch64-darwin": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.0/gleam-v1.19.0-aarch64-apple-darwin.tar.gz",
-      "sha256": "sha256-er/xTBrMfrcl70iDU5xrSN5ytYWTszHKwP8j4KXwaMc="
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-aarch64-apple-darwin.tar.gz",
+      "sha256": "sha256-MYJyFPndTdYLfvt7571C3Xb/cOZGk2dz0qTqmKL+89E="
     },
     "aarch64-linux": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.0/gleam-v1.19.0-aarch64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-t2d+N2PremdS43+af2+UUUGcq1zNv0pBgUqBNWxYzB0="
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-aarch64-unknown-linux-musl.tar.gz",
+      "sha256": "sha256-sO7tjGJUccKrD6twWLU5ecR/o72EMVtJtpSB4m1YP30="
     },
     "x86_64-darwin": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.0/gleam-v1.19.0-x86_64-apple-darwin.tar.gz",
-      "sha256": "sha256-KL2UK0fahLi4cNTtVuMZcjdbTI90VXFght+6W+fz5oc="
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-x86_64-apple-darwin.tar.gz",
+      "sha256": "sha256-IzUBDh5ISaDyPf7QgzTDK59+nMq4cxDJSSXeGyUL3+c="
     },
     "x86_64-linux": {
-      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.0/gleam-v1.19.0-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-YIMUjLQERggQr+NeeHhSflj9JRLdeadrR9WXI4FXU74="
+      "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "sha256-Ihv/B1g3Kq52z+RAt0Rfn1x+pnlHKXsREhFceY/Rg4U="
     }
   }
 }
