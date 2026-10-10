@@ -556,5 +556,11 @@
       "url": "https://github.com/gleam-lang/gleam/releases/download/v1.19.1/gleam-v1.19.1-x86_64-unknown-linux-musl.tar.gz",
       "sha256": "sha256-Ihv/B1g3Kq52z+RAt0Rfn1x+pnlHKXsREhFceY/Rg4U="
     }
+  },
+  "nightly": {
+    "x86_64-linux": {
+      "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-x86_64-unknown-linux-musl.tar.gz",
+      "sha256": "sha256-D8FIBpysxOSpJ+C4HH56/DU7eCBQfJ5HHcuqc3Eoyh0="
+    }
   }
 }
