@@ -572,7 +572,7 @@
     },
     "x86_64-linux": {
       "url": "https://github.com/gleam-lang/gleam/releases/download/nightly/gleam-nightly-x86_64-unknown-linux-musl.tar.gz",
-      "sha256": "sha256-KmI5k7DG7jDAA+U6ugBdNugWYh5ovkuKFsnQNvN20KE="
+      "sha256": "sha256-4jd5dfSRBafdhwWLDEaOSroWjtb3PhtaPsHl6jPH/mE="
     }
   }
 }
